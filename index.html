@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Happy GF's Day 💗</title>
+
+<!-- ================= FONTS ================= -->
+<!-- "Dancing Script" = cute cursive headline font, "Quicksand" = soft rounded body font -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500;700&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --pink: #ffb6c1;
+    --pink-deep: #ff8fab;
+    --pink-light: #ffe4ec;
+    --blue: #a8d8ea;
+    --blue-deep: #8ecae6;
+    --blue-light: #dff3fa;
+    --white: #fffafc;
+    --text: #6b4a56;
+  }
+
+  *{ box-sizing: border-box; margin:0; padding:0; }
+
+  html, body{
+    height:100%;
+    font-family: 'Quicksand', sans-serif;
+    color: var(--text);
+    overflow-x:hidden;
+  }
+
+  body{
+    background: linear-gradient(160deg, var(--pink-light) 0%, var(--blue-light) 50%, var(--pink-light) 100%);
+    background-size: 200% 200%;
+    animation: bgShift 12s ease infinite;
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    position:relative;
+  }
+
+  @keyframes bgShift{
+    0%{ background-position: 0% 50%; }
+    50%{ background-position: 100% 50%; }
+    100%{ background-position: 0% 50%; }
+  }
+
+  h1,h2,h3{ font-family:'Dancing Script', cursive; }
+
+  /* ============ FLOATING BACKGROUND HEARTS ============ */
+  .floating-heart{
+    position: fixed;
+    bottom: -40px;
+    font-size: 22px;
+    opacity: 0.85;
+    pointer-events:none;
+    animation: floatUp linear forwards;
+    z-index: 1;
+    user-select:none;
+  }
+  @keyframes floatUp{
+    0%{ transform: translateY(0) rotate(0deg); opacity:0.9; }
+    10%{ opacity:1; }
+    100%{ transform: translateY(-110vh) rotate(25deg); opacity:0; }
+  }
+
+  /* ============ SCREEN CONTAINERS ============ */
+  .screen{
+    width: 100%;
+    max-width: 480px;
+    padding: 30px 24px 50px;
+    text-align:center;
+    position:relative;
+    z-index:2;
+  }
+  .hidden{ display:none !important; }
+
+  .card{
+    background: rgba(255,255,255,0.75);
+    backdrop-filter: blur(6px);
+    border-radius: 28px;
+    padding: 32px 24px;
+    box-shadow: 0 10px 30px rgba(255, 143, 171, 0.25);
+    border: 2px solid var(--pink);
+  }
+
+  /* ============ LOGIN SCREEN ============ */
+  #login-screen h1{
+    font-size: clamp(2.2rem, 8vw, 3rem);
+    color: var(--pink-deep);
+    margin-bottom: 6px;
+  }
+  #login-screen p.sub{
+    font-size: 0.95rem;
+    margin-bottom: 22px;
+    color: var(--text);
+    opacity: 0.85;
+  }
+
+  .field-label{
+    text-align:left;
+    font-weight:600;
+    font-size:0.85rem;
+    margin: 14px 0 6px 4px;
+    color: var(--pink-deep);
+  }
+
+  #username{
+    width:100%;
+    padding: 12px 16px;
+    border-radius: 20px;
+    border: 2px solid var(--blue-deep);
+    font-family:'Quicksand',sans-serif;
+    font-size:1rem;
+    outline:none;
+    background: var(--white);
+    text-align:center;
+    transition: 0.2s;
+  }
+  #username:focus{ border-color: var(--pink-deep); box-shadow: 0 0 0 3px rgba(255,182,193,0.35); }
+
+  /* heart-shaped pin dots */
+  .pin-display{
+    display:flex;
+    justify-content:center;
+    gap: 14px;
+    margin: 18px 0 20px;
+  }
+  .pin-heart{
+    font-size: 1.8rem;
+    filter: grayscale(1) opacity(0.4);
+    transition: 0.2s;
+  }
+  .pin-heart.filled{
+    filter: none;
+    transform: scale(1.15);
+  }
+
+  .keypad{
+    display:grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    max-width: 260px;
+    margin: 0 auto;
+  }
+  .key{
+    padding: 14px 0;
+    border-radius: 16px;
+    border: none;
+    background: linear-gradient(145deg, var(--blue-light), var(--blue));
+    color: var(--text);
+    font-family:'Quicksand',sans-serif;
+    font-weight:700;
+    font-size: 1.15rem;
+    cursor:pointer;
+    box-shadow: 0 4px 0 var(--blue-deep);
+    transition: 0.08s;
+  }
+  .key:active{
+    transform: translateY(3px);
+    box-shadow: 0 1px 0 var(--blue-deep);
+  }
+  .key.wide{ grid-column: span 1; background: linear-gradient(145deg, var(--pink-light), var(--pink)); box-shadow: 0 4px 0 var(--pink-deep); }
+
+  .unlock-btn{
+    margin-top: 20px;
+    width:100%;
+    padding: 14px;
+    border-radius: 24px;
+    border:none;
+    font-family:'Dancing Script', cursive;
+    font-size: 1.4rem;
+    font-weight:700;
+    color:white;
+    background: linear-gradient(135deg, var(--pink-deep), var(--pink));
+    cursor:pointer;
+    box-shadow: 0 6px 0 #e06d8f;
+    transition: 0.08s;
+  }
+  .unlock-btn:active{ transform: translateY(4px); box-shadow: 0 2px 0 #e06d8f; }
+
+  .shake{ animation: shake 0.4s; }
+  @keyframes shake{
+    0%,100%{ transform: translateX(0); }
+    20%,60%{ transform: translateX(-8px); }
+    40%,80%{ transform: translateX(8px); }
+  }
+
+  #login-error{
+    color:#d9536f;
+    font-size:0.85rem;
+    margin-top: 10px;
+    min-height: 18px;
+    font-weight:600;
+  }
+
+  /* ============ WELCOME / FLOWER BURST SCREEN ============ */
+  #welcome-screen{
+    position: relative;
+    min-height: 70vh;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+  }
+  .burst-flower{
+    position:absolute;
+    top:50%; left:50%;
+    font-size: 1.6rem;
+    transform: translate(-50%,-50%) scale(0);
+    animation: burst 1.4s ease-out forwards;
+    pointer-events:none;
+  }
+  @keyframes burst{
+    0%{ transform: translate(-50%,-50%) scale(0) rotate(0deg); opacity:1; }
+    70%{ opacity:1; }
+    100%{
+      transform: translate(calc(-50% + var(--dx)), calc(-50% + var(--dy))) scale(1.3) rotate(200deg);
+      opacity:0;
+    }
+  }
+
+  #welcome-text{
+    font-size: clamp(2rem, 9vw, 3rem);
+    color: var(--pink-deep);
+    opacity:0;
+    animation: fadeIn 1s ease forwards 0.4s;
+  }
+  #gfday-text{
+    font-size: clamp(1.6rem, 7vw, 2.4rem);
+    color: var(--blue-deep);
+    margin-top: 10px;
+    opacity:0;
+    animation: fadeIn 1s ease forwards 1s;
+  }
+  #gfday-sub{
+    font-size: 0.95rem;
+    font-style: italic;
+    color: var(--text);
+    margin-top: 6px;
+    opacity:0;
+    animation: fadeIn 1s ease forwards 1.6s;
+  }
+  @keyframes fadeIn{ to{ opacity:1; } }
+
+  .continue-btn{
+    margin-top: 34px;
+    padding: 12px 30px;
+    border-radius: 24px;
+    border: 2px solid var(--pink-deep);
+    background: white;
+    color: var(--pink-deep);
+    font-family:'Quicksand',sans-serif;
+    font-weight:700;
+    font-size:1rem;
+    cursor:pointer;
+    opacity:0;
+    animation: fadeIn 1s ease forwards 2.2s;
+  }
+  .continue-btn:active{ transform: scale(0.96); }
+
+  /* ============ MAIN SCREEN ============ */
+  #main-screen h2{
+    font-size: clamp(1.8rem, 7vw, 2.4rem);
+    color: var(--pink-deep);
+    margin-bottom: 24px;
+  }
+
+  .section-block{ margin-bottom: 46px; }
+
+  /* ---- LOCKET ---- */
+  .locket-wrap{ display:flex; justify-content:center; margin-bottom: 10px; }
+  .locket-closed{
+    width: 130px; height: 130px;
+    border-radius: 50%;
+    background: linear-gradient(145deg, var(--pink), var(--blue));
+    display:flex; align-items:center; justify-content:center;
+    font-size: 2.4rem;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15), inset 0 0 0 6px white;
+    cursor:pointer;
+    transition: transform 0.25s;
+  }
+  .locket-closed:active{ transform: scale(0.94); }
+
+  .locket-open{
+    display:flex;
+    gap: 6px;
+    justify-content:center;
+    align-items:center;
+  }
+  .locket-photo{
+    width: 110px; height: 110px;
+    border-radius: 50%;
+    overflow:hidden;
+    border: 5px solid white;
+    box-shadow: 0 6px 16px rgba(0,0,0,0.18);
+    background: linear-gradient(145deg, var(--pink-light), var(--blue-light));
+    display:flex; align-items:center; justify-content:center;
+    font-size:0.75rem;
+    color:#a98;
+    text-align:center;
+  }
+  .locket-photo img{ width:100%; height:100%; object-fit:cover; }
+  .locket-clasp{ font-size:1.5rem; margin: 0 -4px; }
+
+  .hint{ font-size:0.8rem; color:var(--text); opacity:0.65; margin-top:8px; }
+
+  /* ---- ENVELOPE ---- */
+  .envelope-wrap{ display:flex; justify-content:center; }
+  .envelope{
+    width: 220px;
+    height: 140px;
+    position:relative;
+    cursor:pointer;
+  }
+  .env-body{
+    position:absolute; inset:0;
+    background: linear-gradient(145deg, var(--blue-light), white);
+    border: 2px solid var(--blue-deep);
+    border-radius: 8px;
+  }
+  .env-flap{
+    position:absolute;
+    top:0; left:0; width:100%; height:70px;
+    background: linear-gradient(145deg, var(--pink-light), var(--pink));
+    clip-path: polygon(0 0, 100% 0, 50% 75%);
+    border-top-left-radius:8px;
+    border-top-right-radius:8px;
+    transform-origin: top;
+    transition: transform 0.5s;
+    z-index:3;
+  }
+  .envelope.open .env-flap{ transform: rotateX(180deg); }
+  .env-seal{
+    position:absolute;
+    top: 42px; left:50%; transform: translateX(-50%);
+    font-size:1.6rem;
+    z-index:4;
+    transition:opacity 0.3s;
+  }
+  .envelope.open .env-seal{ opacity:0; }
+
+  .letter{
+    position:absolute;
+    top: 12px; left: 50%;
+    transform: translateX(-50%) translateY(0);
+    width: 88%;
+    background: white;
+    border-radius: 6px;
+    padding: 14px 12px;
+    font-size: 0.85rem;
+    line-height:1.5;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.12);
+    max-height: 0;
+    overflow:hidden;
+    opacity:0;
+    transition: all 0.5s ease;
+    z-index:2;
+    text-align:left;
+  }
+  .envelope.open .letter{
+    top: -230px;
+    max-height: 260px;
+    opacity:1;
+    overflow-y:auto;
+  }
+
+  /* ---- RANDOM CUTE MESSAGE ---- */
+  .msg-btn{
+    padding: 12px 26px;
+    border-radius: 22px;
+    border: none;
+    background: linear-gradient(135deg, var(--pink), var(--blue));
+    color: white;
+    font-weight:700;
+    font-family:'Quicksand',sans-serif;
+    cursor:pointer;
+    box-shadow: 0 5px 0 var(--pink-deep);
+  }
+  .msg-btn:active{ transform: translateY(3px); box-shadow:none; }
+  #random-msg{
+    margin-top: 14px;
+    min-height: 30px;
+    font-family:'Dancing Script', cursive;
+    font-size: 1.3rem;
+    color: var(--blue-deep);
+  }
+
+  /* ---- GIF GALLERY ---- */
+  .gif-gallery{
+    display:flex;
+    gap: 10px;
+    overflow-x:auto;
+    padding-bottom: 6px;
+  }
+  .gif-gallery img{
+    height: 140px;
+    border-radius: 14px;
+    border: 3px solid white;
+    box-shadow: 0 6px 14px rgba(0,0,0,0.15);
+  }
+
+  footer{
+    margin-top: 20px;
+    font-size: 0.8rem;
+    opacity:0.6;
+  }
+</style>
+</head>
+<body>
+
+<!-- ================= LOGIN SCREEN ================= -->
+<div class="screen" id="login-screen">
+  <div class="card">
+    <h1>Hi Love 💗</h1>
+    <p class="sub">this is just for you... unlock it 🔒</p>
+
+    <div class="field-label">username</div>
+    <input type="text" id="username" placeholder="who's opening this? 💌" autocomplete="off">
+
+    <div class="field-label" style="margin-top:20px;">tap in your heart code 🔒</div>
+    <div class="pin-display">
+      <span class="pin-heart" data-i="0">🩶</span>
+      <span class="pin-heart" data-i="1">🩶</span>
+      <span class="pin-heart" data-i="2">🩶</span>
+      <span class="pin-heart" data-i="3">🩶</span>
+    </div>
+
+    <div class="keypad" id="keypad">
+      <button class="key">1</button>
+      <button class="key">2</button>
+      <button class="key">3</button>
+      <button class="key">4</button>
+      <button class="key">5</button>
+      <button class="key">6</button>
+      <button class="key">7</button>
+      <button class="key">8</button>
+      <button class="key">9</button>
+      <button class="key wide" id="clearKey">⌫</button>
+      <button class="key">0</button>
+      <button class="key wide" id="hiddenSpacer" style="visibility:hidden;">•</button>
+    </div>
+
+    <button class="unlock-btn" id="unlockBtn">Unlock 💖</button>
+    <div id="login-error"></div>
+  </div>
+</div>
+
+<!-- ================= WELCOME / FLOWER BURST SCREEN ================= -->
+<div class="screen hidden" id="welcome-screen">
+  <div id="burst-container" style="position:relative; width:100%; height:0;"></div>
+  <div id="welcome-text">welcome hdc! 🌸</div>
+  <div id="gfday-text">happy gf's day</div>
+  <div id="gfday-sub">(cuz u technically alr are, u lil fine shyt)</div>
+  <button class="continue-btn" id="continueBtn">keep going →</button>
+</div>
+
+<!-- ================= MAIN SCREEN ================= -->
+<div class="screen hidden" id="main-screen">
+  <h2>a lil something for you 🩷</h2>
+
+  <!-- LOCKET -->
+  <div class="section-block">
+    <div class="locket-wrap">
+      <div class="locket-closed" id="locketClosed">🔒</div>
+      <div class="locket-open hidden" id="locketOpen">
+        <div class="locket-photo">
+          <!-- Replace src below with your girlfriend's photo. Put the image file in an /images folder in your repo. -->
+          <img src="images/her.jpg" alt="her" onerror="this.parentElement.textContent='put her.jpg in /images'">
+        </div>
+        <span class="locket-clasp">💗</span>
+        <div class="locket-photo">
+          <!-- Replace src below with your photo -->
+          <img src="images/him.jpg" alt="him" onerror="this.parentElement.textContent='put him.jpg in /images'">
+        </div>
+      </div>
+    </div>
+    <p class="hint">tap the locket to open it 🔓</p>
+  </div>
+
+  <!-- ENVELOPE / LETTER -->
+  <div class="section-block">
+    <div class="envelope-wrap">
+      <div class="envelope" id="envelope">
+        <div class="env-body"></div>
+        <div class="env-flap"></div>
+        <div class="env-seal">💌</div>
+        <div class="letter" id="letterContent">
+          <!-- ✏️ EDIT YOUR LETTER HERE ✏️ -->
+          My dearest hdc,<br><br>
+          Every single day with you feels like a gift, but today's your day, so let me say it properly:
+          you are the most beautiful, funny, brilliant, and genuinely amazing person I know, and I am
+          so lucky I get to call you mine. Thank you for putting up with me, for making me laugh even
+          on hard days, and for being exactly who you are.<br><br>
+          Happy GF's Day. I love you more than words on a screen could ever show. 💗<br><br>
+          — yours always
+        </div>
+      </div>
+    </div>
+    <p class="hint">tap the envelope to open your letter 💌</p>
+  </div>
+
+  <!-- RANDOM CUTE MESSAGES -->
+  <div class="section-block">
+    <button class="msg-btn" id="msgBtn">tap for a random cute thought 🎀</button>
+    <div id="random-msg"></div>
+  </div>
+
+  <!-- GIF GALLERY (optional / personalize) -->
+  <div class="section-block">
+    <div class="field-label" style="text-align:center;">our little gif gallery ✨</div>
+    <div class="gif-gallery">
+      <!--
+        HOW TO ADD YOUR OWN GIFS:
+        1) Save gif files (e.g. cute1.gif) into the /images folder in your GitHub repo.
+        2) Reference them like the line below: <img src="images/cute1.gif">
+        3) You can also link a hosted gif URL directly, e.g. from Giphy:
+           <img src="https://media.giphy.com/media/XXXXXXX/giphy.gif">
+        Add as many <img> tags as you want, they'll scroll sideways.
+      -->
+      <img src="images/cute1.gif" onerror="this.remove()">
+      <img src="images/cute2.gif" onerror="this.remove()">
+      <img src="images/cute3.gif" onerror="this.remove()">
+    </div>
+  </div>
+
+  <footer>made with 💗 just for you</footer>
+</div>
+
+<script>
+/* ============================================================
+   CONFIG — edit these if you ever want to change the login
+   ============================================================ */
+const VALID_USERNAME = "hdc";
+const VALID_PIN = "9431";
+
+/* ============================================================
+   FLOATING BACKGROUND HEARTS
+   ============================================================ */
+const heartsEmoji = ['💕','💗','💖','🩷','💙','🩵'];
+function spawnFloatingHeart(){
+  const h = document.createElement('div');
+  h.className = 'floating-heart';
+  h.textContent = heartsEmoji[Math.floor(Math.random()*heartsEmoji.length)];
+  h.style.left = Math.random()*100 + 'vw';
+  h.style.fontSize = (14 + Math.random()*18) + 'px';
+  const duration = 6 + Math.random()*6;
+  h.style.animationDuration = duration + 's';
+  document.body.appendChild(h);
+  setTimeout(()=> h.remove(), duration*1000);
+}
+setInterval(spawnFloatingHeart, 700);
+
+/* ============================================================
+   LOGIN / PIN LOGIC
+   ============================================================ */
+let pin = "";
+const pinHearts = document.querySelectorAll('.pin-heart');
+const loginError = document.getElementById('login-error');
+
+function updatePinDisplay(){
+  pinHearts.forEach((el, i) => {
+    if(i < pin.length){
+      el.textContent = '💗';
+      el.classList.add('filled');
+    } else {
+      el.textContent = '🩶';
+      el.classList.remove('filled');
+    }
+  });
+}
+
+document.querySelectorAll('.key').forEach(btn=>{
+  if(btn.id === 'clearKey' || btn.id === 'hiddenSpacer') return;
+  btn.addEventListener('click', ()=>{
+    if(pin.length < 4){
+      pin += btn.textContent.trim();
+      updatePinDisplay();
+    }
+  });
+});
+
+document.getElementById('clearKey').addEventListener('click', ()=>{
+  pin = pin.slice(0, -1);
+  updatePinDisplay();
+});
+
+document.getElementById('unlockBtn').addEventListener('click', attemptLogin);
+
+function attemptLogin(){
+  const username = document.getElementById('username').value.trim().toLowerCase();
+  if(username === VALID_USERNAME.toLowerCase() && pin === VALID_PIN){
+    loginError.textContent = "";
+    document.getElementById('login-screen').classList.add('hidden');
+    document.getElementById('welcome-screen').classList.remove('hidden');
+    burstFlowers();
+  } else {
+    loginError.textContent = "not quite... try again cutie 🥺";
+    const card = document.querySelector('#login-screen .card');
+    card.classList.remove('shake');
+    void card.offsetWidth; // restart animation
+    card.classList.add('shake');
+    pin = "";
+    updatePinDisplay();
+  }
+}
+
+/* ============================================================
+   FLOWER BURST ANIMATION
+   ============================================================ */
+function burstFlowers(){
+  const container = document.getElementById('burst-container');
+  const flowers = ['🌸','🌺','🌷','💐','🌼','✨'];
+  for(let i=0; i<28; i++){
+    const f = document.createElement('span');
+    f.className = 'burst-flower';
+    f.textContent = flowers[Math.floor(Math.random()*flowers.length)];
+    const angle = Math.random() * Math.PI * 2;
+    const distance = 80 + Math.random()*140;
+    const dx = Math.cos(angle) * distance + 'px';
+    const dy = Math.sin(angle) * distance + 'px';
+    f.style.setProperty('--dx', dx);
+    f.style.setProperty('--dy', dy);
+    f.style.animationDelay = (Math.random()*0.3) + 's';
+    container.appendChild(f);
+    setTimeout(()=> f.remove(), 2000);
+  }
+}
+
+document.getElementById('continueBtn').addEventListener('click', ()=>{
+  document.getElementById('welcome-screen').classList.add('hidden');
+  document.getElementById('main-screen').classList.remove('hidden');
+});
+
+/* ============================================================
+   LOCKET
+   ============================================================ */
+document.getElementById('locketClosed').addEventListener('click', ()=>{
+  document.getElementById('locketClosed').classList.add('hidden');
+  document.getElementById('locketOpen').classList.remove('hidden');
+});
+
+/* ============================================================
+   ENVELOPE
+   ============================================================ */
+document.getElementById('envelope').addEventListener('click', function(){
+  this.classList.toggle('open');
+});
+
+/* ============================================================
+   RANDOM CUTE MESSAGES — edit / add your own lines here!
+   ============================================================ */
+const cuteMessages = [
+  "you're my favorite notification 💌",
+  "if kisses were snowflakes, i'd send you a blizzard ❄️💕",
+  "you + me = 🩷 forever",
+  "i fell for you like autumn leaves, honestly 🍂 (i know, cheesy)",
+  "warning: extremely cute human detected 🚨💗",
+  "you make ordinary days feel like a rom-com 🎬",
+  "my favorite place is next to you 🥰",
+  "you're the best decision i never had to think twice about"
+];
+document.getElementById('msgBtn').addEventListener('click', ()=>{
+  const msg = cuteMessages[Math.floor(Math.random()*cuteMessages.length)];
+  document.getElementById('random-msg').textContent = msg;
+});
+</script>
+
+</body>
+</html>
