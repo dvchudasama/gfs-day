@@ -408,6 +408,131 @@
     font-size: 0.8rem;
     opacity:0.6;
   }
+
+  /* ============ SPINNER SCREEN ============ */
+  #spinner-screen{
+    min-height: 70vh;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+  }
+  #spinner-screen h2{
+    font-size: clamp(1.8rem, 8vw, 2.6rem);
+    color: var(--pink-deep);
+    margin-bottom: 26px;
+  }
+  .wheel-stage{
+    position:relative;
+    width: 260px;
+    height: 260px;
+    margin-bottom: 26px;
+  }
+  .pointer{
+    position:absolute;
+    top: -16px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 2rem;
+    z-index: 5;
+    filter: drop-shadow(0 3px 3px rgba(0,0,0,0.25));
+  }
+  .wheel-outer{
+    width:100%;
+    height:100%;
+    border-radius:50%;
+    border: 8px solid white;
+    box-shadow: 0 10px 24px rgba(0,0,0,0.18);
+    overflow:hidden;
+    position:relative;
+  }
+  .wheel-inner{
+    width:100%;
+    height:100%;
+    border-radius:50%;
+    position:relative;
+    background: conic-gradient(
+      #ffd2df 0deg 36deg,
+      var(--pink) 36deg 72deg,
+      var(--blue-light) 72deg 108deg,
+      var(--blue) 108deg 144deg,
+      #ffd2df 144deg 180deg,
+      var(--pink) 180deg 216deg,
+      var(--blue-light) 216deg 252deg,
+      var(--blue) 252deg 288deg,
+      #ffd2df 288deg 324deg,
+      var(--pink) 324deg 360deg
+    );
+    transition: transform 3.2s cubic-bezier(0.17, 0.67, 0.12, 0.99);
+  }
+  .wheel-label{
+    position:absolute;
+    top:50%; left:50%;
+    width: 0; height:0;
+    font-weight:700;
+    font-size: 0.95rem;
+    color: var(--text);
+  }
+  .wheel-label span{
+    position:absolute;
+    display:inline-block;
+    transform: translate(-50%, -85px);
+  }
+  .wheel-label.no-label span{
+    color: #d9536f;
+    font-size: 1.05rem;
+  }
+  .wheel-center{
+    position:absolute;
+    top:50%; left:50%;
+    transform: translate(-50%,-50%);
+    width: 46px; height:46px;
+    border-radius:50%;
+    background: white;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    display:flex; align-items:center; justify-content:center;
+    font-size:1.2rem;
+    z-index:4;
+  }
+
+  #spin-result{
+    min-height: 30px;
+    font-family:'Dancing Script', cursive;
+    font-size: 1.4rem;
+    color: var(--blue-deep);
+    margin-bottom: 14px;
+    opacity:0;
+    transition: opacity 0.5s;
+  }
+  #spin-result.show{ opacity:1; }
+
+  .spinner-btn-row{
+    display:flex;
+    gap: 12px;
+  }
+
+  /* ============ TEXT COUNTER STAT CARD ============ */
+  .stat-card{
+    background: linear-gradient(135deg, var(--pink-light), var(--blue-light));
+    border: 2px solid var(--pink);
+    border-radius: 22px;
+    padding: 18px 16px;
+    margin-bottom: 40px;
+    text-align:center;
+    box-shadow: 0 6px 18px rgba(255,143,171,0.2);
+  }
+  .stat-icon{ font-size: 1.6rem; margin-bottom:4px; }
+  .stat-number{
+    font-family:'Dancing Script', cursive;
+    font-size: clamp(2.2rem, 10vw, 3rem);
+    color: var(--pink-deep);
+    line-height:1;
+  }
+  .stat-caption{
+    font-size: 0.8rem;
+    opacity:0.75;
+    margin-top: 4px;
+  }
 </style>
 </head>
 <body>
@@ -453,14 +578,53 @@
 <div class="screen hidden" id="welcome-screen">
   <div id="burst-container" style="position:relative; width:100%; height:0;"></div>
   <div id="welcome-text">welcome hdc! 🌸</div>
-  <div id="gfday-text">happy gf's day</div>
+  <div id="gfday-text">Happy GF's Day, Heta</div>
   <div id="gfday-sub">(cuz u technically alr are, u lil fine shyt)</div>
   <button class="continue-btn" id="continueBtn">keep going →</button>
+</div>
+
+<!-- ================= SPINNER SCREEN ================= -->
+<div class="screen hidden" id="spinner-screen">
+  <h2>are you my gf? 🤔</h2>
+
+  <div class="wheel-stage">
+    <div class="pointer">🔻</div>
+    <div class="wheel-outer">
+      <div class="wheel-inner" id="wheel">
+        <!-- 10 slices, 1 "No" + 9 "Yes", labels placed at each slice's center angle -->
+        <div class="wheel-label no-label" style="transform:rotate(18deg);"><span>No</span></div>
+        <div class="wheel-label" style="transform:rotate(54deg);"><span>Yes</span></div>
+        <div class="wheel-label" style="transform:rotate(90deg);"><span>Yes</span></div>
+        <div class="wheel-label" style="transform:rotate(126deg);"><span>Yes</span></div>
+        <div class="wheel-label" style="transform:rotate(162deg);"><span>Yes</span></div>
+        <div class="wheel-label" style="transform:rotate(198deg);"><span>Yes</span></div>
+        <div class="wheel-label" style="transform:rotate(234deg);"><span>Yes</span></div>
+        <div class="wheel-label" style="transform:rotate(270deg);"><span>Yes</span></div>
+        <div class="wheel-label" style="transform:rotate(306deg);"><span>Yes</span></div>
+        <div class="wheel-label" style="transform:rotate(342deg);"><span>Yes</span></div>
+      </div>
+    </div>
+    <div class="wheel-center">💗</div>
+  </div>
+
+  <div id="spin-result"></div>
+
+  <div class="spinner-btn-row">
+    <button class="unlock-btn" id="spinBtn" style="max-width:220px;">Spin 🎡</button>
+    <button class="continue-btn hidden" id="spinnerContinueBtn">keep going →</button>
+  </div>
 </div>
 
 <!-- ================= MAIN SCREEN ================= -->
 <div class="screen hidden" id="main-screen">
   <h2>a lil something for you 🩷</h2>
+
+  <!-- TEXT COUNTER -->
+  <div class="stat-card">
+    <div class="stat-icon">📱</div>
+    <div class="stat-number" id="textCounter">0</div>
+    <div class="stat-caption">texts we've sent each other (that i know of)</div>
+  </div>
 
   <!-- LOCKET -->
   <div class="section-block">
@@ -493,10 +657,10 @@
           My dearest hdc,<br><br>
           Every single day with you feels like a gift, but today's your day, so let me say it properly:
           you are the most beautiful, funny, brilliant, and genuinely amazing person I know, and I am
-          so lucky I get to call you mine. Thank you for putting up with me, for making me laugh even
-          on hard days, and for being exactly who you are.<br><br>
+          so lucky I get to call you mine. Thank you for putting up with me and my shenanigans, for making
+          me laugh even on hard days, and for being exactly who you are.<br><br>
           Happy GF's Day. I love you more than words on a screen could ever show. 💗<br><br>
-          — yours always
+          — yours always, humongous D
         </div>
       </div>
     </div>
@@ -527,7 +691,7 @@
     </div>
   </div>
 
-  <footer>made with 💗 just for you</footer>
+  <footer>made with 💗 just for you, pretty girl</footer>
 </div>
 
 <script>
@@ -632,8 +796,78 @@ function burstFlowers(){
 
 document.getElementById('continueBtn').addEventListener('click', ()=>{
   document.getElementById('welcome-screen').classList.add('hidden');
-  document.getElementById('main-screen').classList.remove('hidden');
+  document.getElementById('spinner-screen').classList.remove('hidden');
 });
+
+/* ============================================================
+   SPINNER — "are you my gf?" wheel, rigged to always land on "No"
+   ============================================================ */
+const wheel = document.getElementById('wheel');
+const spinBtn = document.getElementById('spinBtn');
+const spinResult = document.getElementById('spin-result');
+const spinnerContinueBtn = document.getElementById('spinnerContinueBtn');
+
+let totalRotation = 0; // keeps accumulating so each spin visually keeps turning forward
+
+// The "No" slice is centered at 18deg on the wheel's own face (see conic-gradient + labels above).
+// The pointer sits fixed at the top (0deg). To bring the No slice under the pointer, the wheel's
+// final rotation (mod 360) must always equal 342deg — see the geometry note below the script.
+const LANDING_OFFSET = 342;
+
+const noReactions = [
+  "and it's... no! 😏",
+  "wow, no again?? couldn't be rigged 👀",
+  "nope. shocking, i know.",
+  "still no, somehow.",
+  "the wheel has spoken: no 💅"
+];
+
+spinBtn.addEventListener('click', ()=>{
+  spinBtn.disabled = true;
+  spinResult.classList.remove('show');
+
+  const extraSpins = 4 + Math.floor(Math.random()*3); // 4-6 full spins, just for visual flair
+  totalRotation += extraSpins*360 + LANDING_OFFSET - (totalRotation % 360);
+  wheel.style.transform = `rotate(${totalRotation}deg)`;
+
+  setTimeout(()=>{
+    const msg = noReactions[Math.floor(Math.random()*noReactions.length)];
+    spinResult.textContent = msg;
+    spinResult.classList.add('show');
+    spinBtn.disabled = false;
+    spinBtn.textContent = "Spin again? 🎡";
+    spinnerContinueBtn.classList.remove('hidden');
+  }, 3300);
+});
+
+spinnerContinueBtn.addEventListener('click', ()=>{
+  document.getElementById('spinner-screen').classList.add('hidden');
+  document.getElementById('main-screen').classList.remove('hidden');
+  animateTextCounter();
+});
+
+/* ============================================================
+   TEXT COUNTER — animates up to 12,392 once the main screen shows
+   ============================================================ */
+let counterAnimated = false;
+function animateTextCounter(){
+  if(counterAnimated) return;
+  counterAnimated = true;
+  const el = document.getElementById('textCounter');
+  const target = 94582;
+  const duration = 1800;
+  const start = performance.now();
+
+  function tick(now){
+    const progress = Math.min((now - start) / duration, 1);
+    const eased = 1 - Math.pow(1 - progress, 3); // ease-out cubic
+    const value = Math.floor(eased * target);
+    el.textContent = value.toLocaleString();
+    if(progress < 1) requestAnimationFrame(tick);
+    else el.textContent = target.toLocaleString();
+  }
+  requestAnimationFrame(tick);
+}
 
 /* ============================================================
    LOCKET
